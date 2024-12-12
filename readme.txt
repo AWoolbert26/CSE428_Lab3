@@ -29,7 +29,8 @@ Testing:
     1) No arguments: executing ./lab3 gives us:
         Usage: ./lab3 <GameType> <PlayerNames...>
         GameType: Pinochle <Player1> <Player2> <Player3> <Player4>
-            or HoldEm <Player1> <Player2> [<Player3> ... <Player9>] 
+         or HoldEm <Player1> <Player2> [<Player3> ... <Player9>]
+         or GoFish <DeckType> <Player1> <Player2> [<Player3> ... <Player9>]
             (Exit code 7)
         
         That's a proper usage message describing two games implemented and number of players we need to specify for each of them. 
