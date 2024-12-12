@@ -108,7 +108,7 @@ void GoFishGame<Suit, Rank, Deck>::printGameState(int player_number)  {
     // Display the current state of all players' hands and books
     std::cout << "Current Game State:\n";
     std::cout << "It is Player " << player_number << "'s turn:" << std::endl;
-    for (int i = 0; i < player_hands.size(); ++i) {
+    for (size_t i = 0; i < player_hands.size(); ++i) {
         std::cout << "Player " << i << " (" << player_names[i] << "):\n";
         std::cout << "  Hand: ";
         player_hands[i].print(std::cout, 13);
@@ -283,7 +283,7 @@ int GoFishGame<Suit, Rank, Deck>::play() {
     int round_number = 1;
 
     while (gameNotOver()) {
-        for (int i = 0; i < player_names.size(); ++i) {
+        for (size_t i = 0; i < player_names.size(); ++i) {
             if (std::find(removed_player_names.begin(), removed_player_names.end(), player_names[i]) != removed_player_names.end()) {
                 break;
             } else {
@@ -304,7 +304,7 @@ int GoFishGame<Suit, Rank, Deck>::play() {
 */
 template <typename Suit, typename Rank, typename Deck>
 void GoFishGame<Suit, Rank, Deck>::collectBooksForAllPlayers() {
-    for (int i = 0; i < player_names.size(); ++i) {
+    for (size_t i = 0; i < player_names.size(); ++i) {
         while (collect_books(i));
     }
 }
@@ -323,7 +323,7 @@ bool GoFishGame<Suit, Rank, Deck>::gameNotOver() {
 
     // Check if all cards have been moved into books
     if (deck.get_size() == 0) {
-        for (int i = 0; i < player_names.size(); ++i) {
+        for (size_t i = 0; i < player_names.size(); ++i) {
             if (player_hands[i].get_size() != 0) {
                 return true;
             }
@@ -341,7 +341,7 @@ template <typename Suit, typename Rank, typename Deck>
 void GoFishGame<Suit, Rank, Deck>::printRoundInfo(int round_number) {
     std::cout << "Round Number: " << round_number << std::endl;
 
-    for (int i = 0; i < player_names.size(); ++i) {
+    for (size_t i = 0; i < player_names.size(); ++i) {
         std::cout << player_names[i] << " has made: " << books[i].get_size() / 4 << "books" << std::endl;
     } 
 }
@@ -354,7 +354,7 @@ template <typename Suit, typename Rank, typename Deck>
 void GoFishGame<Suit, Rank, Deck>::printWinner() {
     int max_books = 0;
 
-    for (int i = 0; i < player_names.size(); ++i) {
+    for (size_t i = 0; i < player_names.size(); ++i) {
         int player_books = books[i].get_size() / 4;
         if (player_books > max_books) {
             max_books = player_books;
@@ -362,7 +362,7 @@ void GoFishGame<Suit, Rank, Deck>::printWinner() {
     }
 
     std::cout << "The winners are: ";
-    for (int i = 0; i < player_names.size(); ++i) {
+    for (size_t i = 0; i < player_names.size(); ++i) {
         int player_books = books[i].get_size() / 4;
         if (player_books == max_books) {
             std::cout << player_names[i] << " with " << max_books << " books ";
