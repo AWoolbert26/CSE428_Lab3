@@ -172,7 +172,7 @@ bool GoFishGame<Suit, Rank, Deck>::getValidRequestOrGoFish(int player_number) {
             continue; // Restart the loop
         }
 
-        if (selected_player_number == player_number || selected_player_number >= player_hands.size()) {
+        if (selected_player_number == player_number || (size_t) selected_player_number >= player_hands.size()) {
             std::cout << "Invalid player number. Select another." << std::endl;
         } else {
             selected_player_number_is_not_valid = false; // Mark as valid
