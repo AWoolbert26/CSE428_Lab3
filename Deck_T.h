@@ -16,8 +16,8 @@
 #include <random>     // For std::random_device and std::mt19937
 #include "CardSet_T.h"
 
-template <typename Rank, typename Suits>
-class Deck : public CardSet<Rank, Suits> {
+template <typename Rank, typename Suit>
+class Deck : public CardSet<Rank, Suit> {
 public:
     void shuffle(); // Declaration of shuffle member function
 };

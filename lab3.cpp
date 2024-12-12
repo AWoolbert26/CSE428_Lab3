@@ -1,5 +1,5 @@
 /*
- * File: lab1.cpp
+ * File: lab3.cpp
  * 
  * Andrew Woolbert - a.s.woolbert@wustl.edu
  * Daniel Tymoshenko d.tymoshenko@wustl.edu
@@ -13,81 +13,32 @@
 #include <cstring>
 #include "HoldEmDeck.h"
 #include "PinochleDeck.h"
-#include "UnoDeck.h"
 #include "Suit.h"
 #include "PinochleGame.h"
 #include "HoldEmGame.h"
-#include "GoFishGame.h"
+#include "GoFishGame_T.h"
 #include "Game.h"
+#include "UnoDeck.h"
 #include <stdexcept>
 
 std::shared_ptr<Game> create(int argc, const char *argv[]) {
-    // Error checking is done beforehand, so we don't have to do it here.
+    // Error checking is done before hand so we don't have to do it in the create method.
     std::shared_ptr<Game> game_ptr;
 
     std::string game_name = argv[GAME_NAME];
+
     if (game_name == "Pinochle") {
         game_ptr = std::make_shared<PinochleGame>(argc, argv);
     } else if (game_name == "HoldEm") {
         game_ptr = std::make_shared<HoldEmGame>(argc, argv);
     } else if (game_name == "GoFish") {
-        // Check if the next argument specifies the deck type (e.g., "HoldEm", "Pinochle", or "Uno")
-        if (argc > GAME_NAME + 1) {
-            std::string deck_type = argv[GAME_NAME + 1];
-            if (deck_type == "HoldEm") {
-                // Ensure we have enough arguments for player names
-                if (argc >= PLAYER_NAMES_START + NON_PLAYER_NAME_GOFISH_INPUTS) {
-                    std::array<const char*, MAX_NUM_GOFISH_PLAYERS> player_names;
-                    int num_players = argc - (PLAYER_NAMES_START + NON_PLAYER_NAME_GOFISH_INPUTS);
-                    for (int i = 0; i < num_players; ++i) {
-                        player_names[i] = argv[PLAYER_NAMES_START + NON_PLAYER_NAME_GOFISH_INPUTS + i];
-                    }
-
-                    try {
-                        // Create the GoFishGame with the appropriate types
-                        game_ptr = std::make_shared<GoFishGame<Suit, HoldEmRank, HoldEmDeck> >(num_players, player_names);
-                    } catch (const std::exception& e) {
-                        std::cerr << "Error creating GoFishGame: " << e.what() << std::endl;
-                        return nullptr; // Return nullptr or handle as needed
-                    }
-                }
-            } else if (deck_type == "Pinochle") {
-                if (argc >= PLAYER_NAMES_START + NON_PLAYER_NAME_GOFISH_INPUTS) {
-                    std::array<const char*, MAX_NUM_GOFISH_PLAYERS> player_names;
-                    int num_players = argc - (PLAYER_NAMES_START + NON_PLAYER_NAME_GOFISH_INPUTS);
-                    for (int i = 0; i < num_players; ++i) {
-                        player_names[i] = argv[PLAYER_NAMES_START + NON_PLAYER_NAME_GOFISH_INPUTS + i];
-                    }
-
-                    try {
-                        game_ptr = std::make_shared<GoFishGame<Suit, PinochleRank, PinochleDeck> >(num_players, player_names);
-                    } catch (const std::exception& e) {
-                        std::cerr << "Error creating GoFishGame: " << e.what() << std::endl;
-                        return nullptr;
-                    }
-                }
-            } else if (deck_type == "Uno") {
-                if (argc >= PLAYER_NAMES_START + NON_PLAYER_NAME_GOFISH_INPUTS) {
-                    std::array<const char*, MAX_NUM_GOFISH_PLAYERS> player_names;
-                    int num_players = argc - (PLAYER_NAMES_START + NON_PLAYER_NAME_GOFISH_INPUTS);
-                    for (int i = 0; i < num_players; ++i) {
-                        player_names[i] = argv[PLAYER_NAMES_START + NON_PLAYER_NAME_GOFISH_INPUTS + i];
-                    }
-
-                    try {
-                        game_ptr = std::make_shared<GoFishGame<Color, UnoRank, UnoDeck> >(num_players, player_names);
-                    } catch (const std::exception& e) {
-                        std::cerr << "Error creating GoFishGame: " << e.what() << std::endl;
-                        return nullptr;
-                    }
-                }
-            } else {
-                std::cerr << "Invalid deck type specified. Supported types are: HoldEm, Pinochle, Uno." << std::endl;
-                return nullptr;
-            }
-        } else {
-            std::cerr << "Deck type not specified for GoFish." << std::endl;
-            return nullptr;
+        std::string deckType = argv[GOFISH_DECK_TYPE_POS];
+        if (deckType == "HoldEmDeck") {
+            game_ptr = std::make_shared<GoFishGame<Suit, HoldEmRank, HoldEmDeck> >(argc, argv);
+        } else if (deckType == "PinochleDeck") {
+            game_ptr = std::make_shared<GoFishGame<Suit, PinochleRank, PinochleDeck> >(argc, argv);
+        } else if (deckType == "UnoDeck") {
+            game_ptr = std::make_shared<GoFishGame<Color, UnoRank, UnoDeck> >(argc, argv);
         }
     }
 
@@ -110,6 +61,7 @@ int main(int argc, const char* argv[]) {
         std::cerr << "Usage: " << argv[EXECUTABLE] << " <GameType> <PlayerNames...>\n";
         std::cerr << "GameType: Pinochle <Player1> <Player2> <Player3> <Player4>\n";
         std::cerr << "         or HoldEm <Player1> <Player2> [<Player3> ... <Player9>]\n";
+        std::cerr << "         or GoFish <DeckType> <Player1> <Player2> [<Player3> ... <Player9>]\n";
         return USAGE_WRONG_NUM_ARGS_ERROR;
     }
 
@@ -136,6 +88,18 @@ int main(int argc, const char* argv[]) {
         }
         if (!checkIfAllPlayerNamesAreUnique(argc, argv)) {
             std::cerr << "In HoldEm, players can't have the same names.\n";
+            std::cerr << "All player names should be unique.\n";
+            return PLAYERS_HAVE_SAME_NAMES;
+        }
+        game_ptr = create(argc, argv);
+    } else if (game_name == "GoFish") {
+        if (argc < MIN_NUM_GOFISH_VARS || argc > MAX_NUM_GOFISH_VARS) {
+            std::cerr << "Wrong number of players, GoFish requires from 2 to 5 players.\n";
+            std::cerr << "Usage: " << argv[EXECUTABLE] << " GoFish <DeckType> <Player1> <Player2> [<Player3> ... <Player5>]\n";
+            return USAGE_HOLDEM_ERROR;
+        }
+        if (!checkIfAllPlayerNamesAreUnique(argc, argv)) {
+            std::cerr << "In GoFish, players can't have the same names.\n";
             std::cerr << "All player names should be unique.\n";
             return PLAYERS_HAVE_SAME_NAMES;
         }

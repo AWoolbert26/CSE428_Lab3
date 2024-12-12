@@ -33,4 +33,7 @@ PinochleRank& operator++(PinochleRank&);
 class PinochleDeck : public Deck<PinochleRank, Suit> {
 public:
     PinochleDeck();
+
+    // Used to check valid requests for GoFish
+    static PinochleRank fromString(const std::string& str);
 };

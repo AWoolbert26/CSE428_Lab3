@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 #include "Deck_T.h"
 #include "Card_T.h"
 #include "Suit.h"
@@ -40,4 +41,7 @@ HoldEmRank& operator++(HoldEmRank&);
 class HoldEmDeck : public Deck<HoldEmRank, Suit> {
 public:
     HoldEmDeck();
+
+    // Used to check valid requests for GoFish
+    static HoldEmRank fromString(const std::string& str);
 };

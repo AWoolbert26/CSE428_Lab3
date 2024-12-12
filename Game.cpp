@@ -10,12 +10,22 @@
 
 #include "Game.h"
 #include "Constants.h"
+#include <iostream>
 
 // In our implementation argv contains all the command line arguments, 
 // so the list of names starts from 2
 Game::Game(int argc, const char* argv[]) {
-    for (int i = PLAYER_NAMES_START; i < argc; ++i) {
-        player_names.push_back(argv[i]);
+
+    std::string game_name = argv[GAME_NAME];
+
+    if (game_name == "GoFish") {
+        for (int i = GOFISH_PLAYER_NAMES_START; i < argc; ++i) {
+            player_names.push_back(argv[i]);
+        }
+    } else {
+        for (int i = PLAYER_NAMES_START; i < argc; ++i) {
+            player_names.push_back(argv[i]);
+        }
     }
 }
 

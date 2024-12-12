@@ -11,8 +11,8 @@
 #include "Deck_T.h"
 
 // Shuffle member function
-template <typename Rank, typename Suits>
-void Deck<Rank, Suits>::shuffle() {
+template <typename Rank, typename Suit>
+void Deck<Rank, Suit>::shuffle() {
     std::random_device rd;                        // Random device
     std::mt19937 gen(rd());                       // Seed the generator using the random device
 

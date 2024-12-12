@@ -103,6 +103,24 @@ HoldEmRank& operator++(HoldEmRank& rank) {
     return rank;
 }
 
+HoldEmRank HoldEmDeck::fromString(const std::string& str) {
+    if (str == "two") return HoldEmRank::two;
+    if (str == "three") return HoldEmRank::three;
+    if (str == "four") return HoldEmRank::four;
+    if (str == "five") return HoldEmRank::five;
+    if (str == "six") return HoldEmRank::six;
+    if (str == "seven") return HoldEmRank::seven;
+    if (str == "eight") return HoldEmRank::eight;
+    if (str == "nine") return HoldEmRank::nine;
+    if (str == "ten") return HoldEmRank::ten;
+    if (str == "jack") return HoldEmRank::jack;
+    if (str == "queen") return HoldEmRank::queen;
+    if (str == "king") return HoldEmRank::king;
+    if (str == "ace") return HoldEmRank::ace;
+
+    // If the string doesn't match any valid rank, return undefined
+    return HoldEmRank::undefined;
+}
 
 HoldEmDeck::HoldEmDeck() {
     for (Suit s = Suit::clubs; s != Suit::undefined; ++s) {

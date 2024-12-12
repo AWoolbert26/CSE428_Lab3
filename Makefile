@@ -4,13 +4,13 @@ EXECUTABLE	= lab3
 #		Source (.cpp) files you want to compile
 #		(NOTE: Don't include header (.h) files, or any source (.cpp) files
 #		that only contain template class method definitions.)
-CMPL_SRCS	= Suit.cpp PinochleDeck.cpp HoldEmDeck.cpp Game.cpp PinochleGame.cpp HoldEmGame.cpp lab3.cpp
+CMPL_SRCS	= Suit.cpp PinochleDeck.cpp HoldEmDeck.cpp UnoDeck.cpp Game.cpp PinochleGame.cpp HoldEmGame.cpp lab3.cpp 
 
 #               Source files containing only template class method definitions
-TMPL_SRCS	= Card_T.cpp CardSet_T.cpp Deck_T.cpp
+TMPL_SRCS	= Card_T.cpp CardSet_T.cpp Deck_T.cpp GoFishGame_T.cpp
 
 #               Header (.h) files
-HEADER_FILES    = Constants.h Card_T.h CardSet_T.h Suit.h Deck_T.h PinochleDeck.h HoldEmDeck.h Game.h PinochleGame.h HoldEmGame.h 
+HEADER_FILES    = Constants.h Card_T.h CardSet_T.h Suit.h Deck_T.h PinochleDeck.h HoldEmDeck.h UnoDeck.h Game.h PinochleGame.h HoldEmGame.h GoFishGame_T.h 
 
 #               Any special flags that should be set for compilation
 SPECIAL_FLAGS  = -std=c++17 -DTEMPLATE_HEADERS_INCLUDE_SOURCE

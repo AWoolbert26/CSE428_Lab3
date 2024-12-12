@@ -8,6 +8,7 @@
  * This file contains the definitions related to the Uno deck and its class
  */
 
+#include <iostream>
 #include "UnoDeck.h"
 
 // Inserts color representation on ostream
@@ -172,11 +173,32 @@ UnoRank& operator++(UnoRank& rank) {
     return rank;
 }
 
-// Constructor for UnoDeck
+UnoRank UnoDeck::fromString(const std::string& str) {
+    if (str == "0") return UnoRank::zero;
+    if (str == "1") return UnoRank::one;
+    if (str == "2") return UnoRank::two;
+    if (str == "3") return UnoRank::three;
+    if (str == "4") return UnoRank::four;
+    if (str == "5") return UnoRank::five;
+    if (str == "6") return UnoRank::six;
+    if (str == "7") return UnoRank::seven;
+    if (str == "8") return UnoRank::eight;
+    if (str == "9") return UnoRank::nine;
+    if (str == "skip") return UnoRank::skip;
+    if (str == "reverse") return UnoRank::reverse;
+    if (str == "drawtwo") return UnoRank::drawtwo;
+    if (str == "drawfour") return UnoRank::drawfour;
+    if (str == "wild") return UnoRank::wild;
+    if (str == "blank") return UnoRank::blank;
+
+    // If the string doesn't match any valid rank, return undefined
+    return UnoRank::undefined;
+}
+
 UnoDeck::UnoDeck() {
     // One card of rank zero for each color (one red, blue, green, yellow)
     for (Color color : {Color::red, Color::blue, Color::green, Color::yellow}) {
-        this->cards.push_back(Card<Color, UnoRank>(color, UnoRank::zero));
+        this->cards.push_back(Card<UnoRank, Color>(UnoRank::zero, color));
     }
 
     // Two cards of each rank (1 to drawtwo) for each color
@@ -184,15 +206,15 @@ UnoDeck::UnoDeck() {
                           UnoRank::five, UnoRank::six, UnoRank::seven, UnoRank::eight,
                           UnoRank::nine, UnoRank::skip, UnoRank::reverse, UnoRank::drawtwo}) {
         for (Color color : {Color::red, Color::blue, Color::green, Color::yellow}) {
-            this->cards.push_back(Card<Color, UnoRank>(color, rank));
-            this->cards.push_back(Card<Color, UnoRank>(color, rank));  // Add the second card
+            this->cards.push_back(Card<UnoRank, Color>(rank, color));
+            this->cards.push_back(Card<UnoRank, Color>(rank, color));  // Add the second card
         }
     }
 
     // Four black cards for each rank (drawfour, wild, blank)
     for (UnoRank rank : {UnoRank::drawfour, UnoRank::wild, UnoRank::blank}) {
         for (int i = 0; i < 4; ++i) {
-            this->cards.push_back(Card<Color, UnoRank>(Color::black, rank));
+            this->cards.push_back(Card<UnoRank, Color>(rank, Color::black));
         }
     }
 }

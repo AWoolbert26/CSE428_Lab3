@@ -12,22 +12,22 @@
 
 #include <iostream>
 
-template <typename Rank, typename Suits>
+template <typename Rank, typename Suit>
 struct Card {
     Rank rank;
-    Suits suit;
+    Suit suit;
 
-    Card(Rank, Suits);
+    Card(Rank, Suit);
 };
 
-template <typename Rank, typename Suits>
-std::ostream& operator<<(std::ostream&, const Card<Rank, Suits>&);
+template <typename Rank, typename Suit>
+std::ostream& operator<<(std::ostream&, const Card<Rank, Suit>&);
 
-template <typename Rank, typename Suits>
-bool compareByRankThenSuit(const Card<Rank, Suits>&, const Card<Rank, Suits>&);
+template <typename Rank, typename Suit>
+bool compareByRankThenSuit(const Card<Rank, Suit>&, const Card<Rank, Suit>&);
 
-template <typename Rank, typename Suits>
-bool compareBySuitThenRank(const Card<Rank, Suits>&, const Card<Rank, Suits>&);
+template <typename Rank, typename Suit>
+bool compareBySuitThenRank(const Card<Rank, Suit>&, const Card<Rank, Suit>&);
 
 
 #ifdef TEMPLATE_HEADERS_INCLUDE_SOURCE

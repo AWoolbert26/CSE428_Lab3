@@ -12,6 +12,7 @@
 
 constexpr int SUCCESS = 0;
 constexpr int WRONG_NUM_OF_ARGUMENTS = 1;
+constexpr int WRONG_NUM_OF_CARDS_PER_RANK = 2;
 constexpr int SUCCESS_END_OF_GAME = 6;
 constexpr int USAGE_WRONG_NUM_ARGS_ERROR = 7;
 constexpr int USAGE_PINOCHLE_ERROR = 8;
@@ -45,7 +46,13 @@ constexpr int NUM_OF_PINOCHLE_MELDS = 15;
 
 constexpr int MIN_NUM_GOFISH_PLAYERS = 2;
 constexpr int MAX_NUM_GOFISH_PLAYERS = 5;
+constexpr int MIN_NUM_GOFISH_VARS = 4;
+constexpr int MAX_NUM_GOFISH_VARS = 7;
+constexpr int GOFISH_DECK_TYPE_POS = 2;
+constexpr int CARDS_FOR_2_GOFISH_PLAYERS = 7;
+constexpr int CARDS_FOR_MORE_THAN_2_GOFISH_PLAYERS = 5;
 constexpr int NON_PLAYER_NAME_GOFISH_INPUTS = 3;
+constexpr int GOFISH_PLAYER_NAMES_START = 3;
 
 enum INPUT_VARS {
     EXECUTABLE,
