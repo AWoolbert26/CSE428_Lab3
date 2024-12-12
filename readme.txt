@@ -5,21 +5,56 @@ Andrew Woolbert a.s.woolbert@wustl.edu
 
 Problems:
 
-     - Iterator Syntax Errors: Misunderstanding how to properly implement and use begin() and end() iterators in the CardSet class template.
+Methodology and Process:
 
-     - Errors in defining or passing predicates for the collect_if method, leading to incorrect filtering or collection of cards.
+    Steps 1-6: Copied lab2 into the repository and renamed everything that needed it. Fixed a few small errors from lab2 such as the Ace low straight being the lowest
+               and three of a kind not checking for high card.
+    
+    Step 7: Added the begin and end accessors for the cards member variable of cardset. No errors here. 
+    Step 8: Added a sort method to the CardSet class template. Refactored play in both pinochle and holdem games to use the iterators. 
+            Did the same for holdem_hand_evaluation and suit_independent_evaluation. No Errors or issues
+    Step 9: Added type specifiers for the card type, suit type, rank type, and iterator type in the public portion of the declaration of the CardSet class template. No errors or issues.
+    Step 10: Moved the collect method from the Deck class template up into the CardSet class template, and rewrote it to use the std::move function. No errors or issues.
+    Step 11: Added the collect_if method to the CardSet class template. No errors or issues.
 
-     - Overlooking edge cases when using std::move and std::back_inserter, potentially leading to dangling references or unintentional data retention.
+    Step 12: Added the request method to the CardSet class template. Made the lab and it compiled and ran the same as in lab2. No errors or issues. 
 
-     - Duplicate Player Names: Overlooking checks for duplicate names during player initialization, potentially causing confusing game states.
+    Step 13: Created UnoDeck header and source files. Added a color enumeration. No errors or issues.
 
-     - Turn Input Validation: Mishandling invalid player numbers or card ranks during input, leading to crashes or undefined behavior.
+    Step 14: Declared the UnoRank enumeration, its operators, and the same oporators for Color. No errors or issues. 
 
-     - Empty Deck Handling: Incorrectly managing game states when the deck is empty, such as failing to properly eliminate players or terminate the game.
+    Step 15: Declared and defined the UnoDeck class. No Errors or issues.
 
-     - Game Termination Logic: Failing to handle all conditions for ending the game, such as when only one player remains or all books are collected.
+    Step 16: Declared and defined the GoFishGame class template. I did decide to use count_if to validate different decks and created a helper function. checkIfValidDeck to do so.
+             I did run into a number of errors while coding this section. At first I was unsure how to parameterize the templates but eventually, through trial and error, found 
+             an effective configuration. I decided to make the GoFishGame class inherit from the Game class as that allows it to be created in the create helper function which is called
+             in the main function. Because I did have it inherit publically from main we needed to pass argc and argv into the constructor in order to pass those along to the game base constructor.
+             Without argc and argv Game would be unable to construct the correct player_names list for GoFishGame as the player names start one later than HoldEm and Pinochle.
 
-     - Command-Line Argument Parsing: Overlooking edge cases for invalid or improperly formatted arguments, leading to unhelpful error messages.
+    Step 17: Added the static assert statement into the template header. No errors or issues. 
+
+    Step 18: Added the collect books method to the GoFishGame class template. Simply used a count if to check if there are 4 cards of a certain rank and then collect_if to transfer it to 
+             the players books set. No errors or Issues.
+
+    Step 19: Building out the turn method for the GoFishGame class template took, by far, the most time. I made sure that the hand output is nicely compacted so that the user can see  
+             all players hands at the same time. The prompting of the user for a valid card rank and player number was a little complicated. I solved this by adding a from_string method
+             to all of the Deck classes. This method takes in a string and, if it is valid, returns a corresponding rank. This allowed me to check if the string that the player submits
+             is actually equal to the rank of one of the cards in his hand. I decided to just transfer one card over instead of many cards. I also implemented the gofish method if the 
+             request is unsuccessful. If the players hand is empty They automatically GoFish.
+
+    Step 20: Implemented the deal method. No errors or issues. 
+
+    Step 21: Implemented the play method. No errors or issues. 
+
+    Step 22: Changed the create method to check if the game is GoFish and create a GoFishGame specialized for different deck types. Also changed Game so that if the game is GoFish it creates
+             the player_names vector starting one later. No errors or issues.
+
+    Step 23: Modified the programs main function to accept GoFish and uses the create function accordingly. No errors or issues.
+
+    Step 24: When I made the entire thing there were numerous errors and issues throughout the codebase the compiler wasn't able to detect them until I actually instantiated a GoFishGame instance.
+             these took a very long time to sort out ...
+
+    Step 25: Ran numerous tests as described below.
 
 
 Testing:
@@ -370,4 +405,3 @@ Testing:
           Books: QH QS QD QD
 
         The book was recognized correctly and game continues to work properly on all test cases.
-
