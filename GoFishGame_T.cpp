@@ -156,7 +156,7 @@ bool GoFishGame<Suit, Rank, Deck>::getValidRequestOrGoFish(int player_number) {
         if (count != 0) {
             rank_is_not_valid = false;  
         } else {
-            std::cout << "You don't have any cards of that rank. Try again." << std::endl;
+            std::cout << "You don't have any cards of that rank or the card type you entered doesn't exist. Try again." << std::endl;
         }
     }
 

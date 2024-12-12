@@ -93,8 +93,6 @@ int main(int argc, const char* argv[]) {
         }
         game_ptr = create(argc, argv);
     } else if (game_name == "GoFish") {
-        std::string deck_type = argv[GOFISH_DECK_TYPE_POS];
-
         if (argc < MIN_NUM_GOFISH_VARS || argc > MAX_NUM_GOFISH_VARS) {
             std::cerr << "Wrong number of players, GoFish requires from 2 to 5 players.\n";
             std::cerr << "Usage: " << argv[EXECUTABLE] << " GoFish <DeckType> <Player1> <Player2> [<Player3> ... <Player5>]\n";
@@ -104,11 +102,6 @@ int main(int argc, const char* argv[]) {
             std::cerr << "In GoFish, players can't have the same names.\n";
             std::cerr << "All player names should be unique.\n";
             return PLAYERS_HAVE_SAME_NAMES;
-        }
-        if (deck_type != "HoldEmDeck" && deck_type != "PinochleDeck" && deck_type != "UnoDeck") {
-            std::cerr << "Invalid deck type.\n";
-            std::cerr << "Must choose either HoldEmDeck, PinochleDeck, or UnoDeck\n";
-            return INVALID_DECK_TYPE;
         }
         game_ptr = create(argc, argv);
     } else {

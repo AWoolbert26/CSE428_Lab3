@@ -104,19 +104,19 @@ HoldEmRank& operator++(HoldEmRank& rank) {
 }
 
 HoldEmRank HoldEmDeck::fromString(const std::string& str) {
-    if (str == "two") return HoldEmRank::two;
-    if (str == "three") return HoldEmRank::three;
-    if (str == "four") return HoldEmRank::four;
-    if (str == "five") return HoldEmRank::five;
-    if (str == "six") return HoldEmRank::six;
-    if (str == "seven") return HoldEmRank::seven;
-    if (str == "eight") return HoldEmRank::eight;
-    if (str == "nine") return HoldEmRank::nine;
-    if (str == "ten") return HoldEmRank::ten;
-    if (str == "jack") return HoldEmRank::jack;
-    if (str == "queen") return HoldEmRank::queen;
-    if (str == "king") return HoldEmRank::king;
-    if (str == "ace") return HoldEmRank::ace;
+    if (str == "two" || str == "2") return HoldEmRank::two;
+    if (str == "three" || str == "3") return HoldEmRank::three;
+    if (str == "four" || str == "4") return HoldEmRank::four;
+    if (str == "five" || str == "5") return HoldEmRank::five;
+    if (str == "six" || str == "6") return HoldEmRank::six;
+    if (str == "seven" || str == "7") return HoldEmRank::seven;
+    if (str == "eight" || str == "8") return HoldEmRank::eight;
+    if (str == "nine" || str == "9") return HoldEmRank::nine;
+    if (str == "ten" || str == "10") return HoldEmRank::ten;
+    if (str == "jack" || str == "J") return HoldEmRank::jack;
+    if (str == "queen" || str == "Q") return HoldEmRank::queen;
+    if (str == "king" || str == "K") return HoldEmRank::king;
+    if (str == "ace" || str == "A") return HoldEmRank::ace;
 
     // If the string doesn't match any valid rank, return undefined
     return HoldEmRank::undefined;
