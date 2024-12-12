@@ -264,4 +264,110 @@ Testing:
 
         That's a proper error showing how to start GoFish game.
 
-    17) GoFish game with only deck provided: ./lab3 GoFish
+    17) GoFish game with Uno deck and two players: ./lab3 GoFish UnoDeck 0 1
+
+        Current Game State:
+        It is Player 0's turn:
+        Player 0 (0):
+          Hand: 8Blue 6Blue WildBlack Draw FourBlack 8Red 2Blue 4Blue
+          Books:
+
+        Player 1 (1):
+          Hand: 9Blue ReverseGreen 0Green 5Blue 4Red ReverseGreen 5Blue
+          Books:
+
+        Enter a rank (e.g., zero, one, two, skip, etc.):
+
+        We try entering something that is not a card, like "notacard", and get:
+
+        You don't have any cards of that rank or the card type you entered doesn't exist. Try again.
+
+        This is a proper responce. Now let's try entering card type that we(player 0) don't own, for example 7. We get:
+
+        You don't have any cards of that rank or the card type you entered doesn't exist. Try again.
+
+        That's again right. Then finally let's do a proper move. Let's choose 2, which another player doesn't have.
+
+        Enter a rank (e.g., zero, one, two, skip, etc.): 2
+        Enter a player number (e.g., 0, 1, 2, 3, etc.): 1
+        Current Game State:
+        It is Player 1's turn:
+        Player 0 (0):
+          Hand: 8Blue 6Blue WildBlack Draw FourBlack 8Red 2Blue 4Blue 9Blue
+          Books:
+
+        Player 1 (1):
+          Hand: 9Blue ReverseGreen 0Green 5Blue 4Red ReverseGreen 5Blue
+          Books:
+
+
+        As we see since player 1 doesn't have 2 we drawed a card from the deck and received 9Blue which is correct. One might get confused by why there player 1 also has card 9Blue and player 0 now has received another 9Blue card, but as described in step 15 of the lab manual, there are two 9Blue cards in the Uno deck.
+
+        Now we are player #1 and let's choose a card that we don't have.
+
+        Enter a rank (e.g., zero, one, two, skip, etc.): 2
+        You don't have any cards of that rank. Try again.
+
+        Again we got a correct behavior.
+
+        Now let's finally steal a card that player 0 has in their deck, which is 9Blue.
+
+        Enter a rank (e.g., zero, one, two, skip, etc.): 9
+        Enter a player number (e.g., 0, 1, 2, 3, etc.): 0
+        Current Game State:
+        It is Player 1's turn:
+        Player 0 (0):
+          Hand: 8Blue 6Blue WildBlack Draw FourBlack 8Red 2Blue 4Blue
+          Books:
+
+        Player 1 (1):
+          Hand: 9Blue ReverseGreen 0Green 5Blue 4Red ReverseGreen 5Blue 9Blue
+          Books:
+
+
+        We successfully stole the 9Blue card from the player 0's deck and added it at the end of ours, which is correct!
+
+        Now we are asked again to make a turn for player 1, which is correct as our turn was successful so we get to make another one. I did around 20 more casual turns testing this game out and didn't run into any issues.
+
+    18) We did the same deep testing for GoFish game based on the Pinochle deck and didn't run into any problems. Let's show some important steps from this testing.
+
+        Another player has a few card of the requested type, but only one is drawn as described in the lab manual step 16:
+
+        Current Game State:
+        It is Player 1's turn:
+        Player 0 (0):
+          Hand: JC KS QD QD 9C JD QH 9S 9D 10D
+          Books:
+
+        Player 1 (1):
+          Hand: QH QS KH JC 10S
+          Books:
+
+        Enter a rank (e.g., zero, one, two, skip, etc.): Q
+        Enter a player number (e.g., 0, 1, 2, 3, etc.): 0
+        Current Game State:
+        It is Player 1's turn:
+        Player 0 (0):
+          Hand: JC KS QD 9C JD QH 9S 9D 10D
+          Books:
+
+        Player 1 (1):
+          Hand: QH QS KH JC 10S QD
+          Books:
+
+          Exactly how it's needed. After that we reqest Queen again to get a book:
+
+          Enter a rank (e.g., zero, one, two, skip, etc.): Q
+        Enter a player number (e.g., 0, 1, 2, 3, etc.): 0
+        Current Game State:
+        It is Player 1's turn:
+        Player 0 (0):
+          Hand: JC KS 9C JD QH 9S 9D 10D
+          Books:
+
+        Player 1 (1):
+          Hand: KH JC 10S
+          Books: QH QS QD QD
+
+        The book was recognized correctly and game continues to work properly on all test cases.
+
