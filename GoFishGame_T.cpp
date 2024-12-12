@@ -164,11 +164,18 @@ bool GoFishGame<Suit, Rank, Deck>::getValidRequestOrGoFish(int player_number) {
         std::cout << "Enter a player number (e.g., 0, 1, 2, 3, etc.): ";
         std::cin >> selected_player_number;
 
+        // Check for invalid input
+        if (std::cin.fail()) {
+            std::cin.clear(); // Clear the error flag
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Discard invalid input
+            std::cout << "Invalid input. Please enter a valid number." << std::endl;
+            continue; // Restart the loop
+        }
+
         if (selected_player_number == player_number || selected_player_number >= player_hands.size()) {
-            std::cout << "Invalid player number. Select a another." << std::endl;
-            std::cin.clear();
+            std::cout << "Invalid player number. Select another." << std::endl;
         } else {
-            selected_player_number_is_not_valid = false;
+            selected_player_number_is_not_valid = false; // Mark as valid
         }
     }
 

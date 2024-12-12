@@ -28,10 +28,10 @@ public:
 
     void sort();
     void collect(CardSet<Rank, Suit>& other);
-    void collect_if(CardSet<Rank, Suit>& deck, std::function<bool(Card<Rank, Suit>&)> predicate);
+    void collect_if(CardSet<Rank, Suit>& deck, std::function<bool(card_type&)> predicate);
     bool request(CardSet<Rank, Suit>& deck, Rank rank);
     int get_size();
-    Card<Rank, Suit> get_top_card();
+    card_type get_top_card();
 };
 
 #ifdef TEMPLATE_HEADERS_INCLUDE_SOURCE
