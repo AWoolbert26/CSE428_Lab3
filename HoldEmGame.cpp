@@ -291,12 +291,46 @@ bool operator<(const HoldEmGame::Player& player1, const HoldEmGame::Player& play
         case HoldEmHandRank::threeofakind: {
             auto player1ThreeRank = HoldEmGame::getThreeOfAKindRank(player1.hand);
             auto player2ThreeRank = HoldEmGame::getThreeOfAKindRank(player2.hand);
-            return player1ThreeRank < player2ThreeRank;
+
+            if (player1ThreeRank != player2ThreeRank) {
+                return player1ThreeRank < player2ThreeRank;
+            }
+
+            auto player1Kickers = HoldEmGame::getKickers(player1.hand);
+            auto player2Kickers = HoldEmGame::getKickers(player2.hand);
+
+            for (size_t i = 0; i < std::min(player1Kickers.size(), player2Kickers.size()); ++i) {
+                if (player1Kickers[i] != player2Kickers[i]) {
+                    return player1Kickers[i] < player2Kickers[i];
+                }
+            }
+            return false; 
         }
 
         case HoldEmHandRank::straight: {
-            auto player1HighestCard = HoldEmGame::getHighestCard(player1.hand);
-            auto player2HighestCard = HoldEmGame::getHighestCard(player2.hand);
+            // Get sorted ranks for both players
+            auto player1Ranks = HoldEmGame::getSortedRanks(player1.hand);
+            auto player2Ranks = HoldEmGame::getSortedRanks(player2.hand);
+
+            // Check for "wheel" straight in player 1's hand
+            bool player1HasWheel = (player1Ranks[0] == HoldEmRank::ace &&
+                                    player1Ranks[1] == HoldEmRank::five &&
+                                    player1Ranks[2] == HoldEmRank::four &&
+                                    player1Ranks[3] == HoldEmRank::three &&
+                                    player1Ranks[4] == HoldEmRank::two);
+
+            // Check for "wheel" straight in player 2's hand
+            bool player2HasWheel = (player2Ranks[0] == HoldEmRank::ace &&
+                                    player2Ranks[1] == HoldEmRank::five &&
+                                    player2Ranks[2] == HoldEmRank::four &&
+                                    player2Ranks[3] == HoldEmRank::three &&
+                                    player2Ranks[4] == HoldEmRank::two);
+
+            // Adjust the highest card for "wheel" hands to be the lowest rank (two)
+            auto player1HighestCard = player1HasWheel ? HoldEmRank::five : player1Ranks[0];
+            auto player2HighestCard = player2HasWheel ? HoldEmRank::five : player2Ranks[0];
+
+            // Compare the highest cards
             return player1HighestCard < player2HighestCard;
         }
 
@@ -325,8 +359,29 @@ bool operator<(const HoldEmGame::Player& player1, const HoldEmGame::Player& play
         }
 
         case HoldEmHandRank::straightflush: {
-            auto player1HighestCard = HoldEmGame::getHighestCard(player1.hand);
-            auto player2HighestCard = HoldEmGame::getHighestCard(player2.hand);
+            // Get sorted ranks for both players
+            auto player1Ranks = HoldEmGame::getSortedRanks(player1.hand);
+            auto player2Ranks = HoldEmGame::getSortedRanks(player2.hand);
+
+            // Check for "wheel" straight in player 1's hand
+            bool player1HasWheel = (player1Ranks[0] == HoldEmRank::ace &&
+                                    player1Ranks[1] == HoldEmRank::five &&
+                                    player1Ranks[2] == HoldEmRank::four &&
+                                    player1Ranks[3] == HoldEmRank::three &&
+                                    player1Ranks[4] == HoldEmRank::two);
+
+            // Check for "wheel" straight in player 2's hand
+            bool player2HasWheel = (player2Ranks[0] == HoldEmRank::ace &&
+                                    player2Ranks[1] == HoldEmRank::five &&
+                                    player2Ranks[2] == HoldEmRank::four &&
+                                    player2Ranks[3] == HoldEmRank::three &&
+                                    player2Ranks[4] == HoldEmRank::two);
+
+            // Adjust the highest card for "wheel" hands to be the lowest rank (two)
+            auto player1HighestCard = player1HasWheel ? HoldEmRank::five : player1Ranks[0];
+            auto player2HighestCard = player2HasWheel ? HoldEmRank::five : player2Ranks[0];
+
+            // Compare the highest cards
             return player1HighestCard < player2HighestCard;
         }
 
