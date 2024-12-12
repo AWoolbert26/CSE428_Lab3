@@ -35,30 +35,30 @@ Methodology and Process:
 
     Step 17: Added the static assert statement into the template header. No errors or issues. 
 
-    Step 18: 
+    Step 18: Added the collect books method to the GoFishGame class template. Simply used a count if a
 
 
 Testing:
 
 -Testing for different command line arguments:
     Note that I'm using IDE which displays the exit code differently that the usual terminal would do.
-    1) No arguments: executing ./lab3 gives us:
-        Usage: ./lab3 <GameType> <PlayerNames...>
+    1) No arguments: executing ./lab2 gives us:
+        Usage: ./lab2 <GameType> <PlayerNames...>
         GameType: Pinochle <Player1> <Player2> <Player3> <Player4>
-         or HoldEm <Player1> <Player2> [<Player3> ... <Player9>]
-         or GoFish <DeckType> <Player1> <Player2> [<Player3> ... <Player9>]
+            or HoldEm <Player1> <Player2> [<Player3> ... <Player9>] 
+            or GoFish <DeckType> <Player1> <Player2> [<Player3> ... <Player9>]
             (Exit code 7)
         
         That's a proper usage message describing two games implemented and number of players we need to specify for each of them. 
 
-    2) Only one argument specifying wrong type of game: ./lab3 Poker
+    2) Only one argument specifying wrong type of game: ./lab2 Poker
         Unknown game type: Poker
         Usage: ./lab3 <game_name> <PlayerNames...> 
         (Exit code 10)
 
         Proper usage message telling that there's no such game.
 
-    3) Wrong game name and some players specified: ./lab3 Poker Bob Alica
+    3) Wrong game name and some players specified: ./lab2 Poker Bob Alica
         Unknown game type: Poker
         Usage: ./lab3 <game_name> <PlayerNames...>
         (Exit code 10)
@@ -105,112 +105,148 @@ Testing:
 
         The game started successfully which is a correct behavior. 
 
-    8) Pinochle game, correct number of players but two of gthem have the same name: ./lab3 Pinochle 1 1 3 4
+    8) Pinochle game, correct number of players but two of gthem have the same name: ./lab2 Pinochle 1 1 3 4
+        1's hand:
+        QD 9H QH 10C AC QC AH 9S QC KH KC JD 
+
+        1's hand:
+        KH QS QS 10D 10S 9H 9C 10H AS 10D 10C KD 
+
+        3's hand:
+        9C JH 10H QD KD JS AC KS 9D JD JC JS 
+        fortyjacks 40
+
+        4's hand:
+        AS 10S JH KS 9S KC AH QH AD JC 9D AD 
+
+        BUG! The game cannot doesn't really make sense when some players have absolutely the same names.
+        I added an additional check for that into both Pinochle and HoldEm games.
+        Implementation strategy: usually to check if an array has two equal elements we would sort it or use set/map, but here since the number of players is at most 9 a regular nested for range loop will be really fast and will avoid unnecessary library #includes
+        Also we implement this check on the initialization stages for both games instead of implementing it for the whole Game class, because, in theory, some games might allow having players with the same name (for example a game might have 2 players but they play in some specific order which is specified in this way).
+
+        Let's test again: ./lab2 Pinochle 1 1 3 4
         In Pinochle, players can't have the same names.
         All player names should be unique.
 
         (Exit code 13)
 
-        The output is correct, no same names are allowed in Pinochle.
+        Now the output is correct.
 
-   
-    9) HoldEm game, no players provided: ./lab3 HoldEm
+    9) Since we added additional check for players let's see again if the game start correctly if all names are unique: ./lab2 Pinochle 1 2 3 4
+        1's hand:
+        QC KD QH JD 9D 10C JS JC KH 10D 10H 10C 
+
+        2's hand:
+        9C 9S QS 9D AH 10H QC 9H AC JC AH QD 
+
+        3's hand:
+        9H JS AC 9S JH KC KD KH 9C AS AS 10S 
+
+        4's hand:
+        JD 10D KS KC JH QH AD KS QS QD AD 10S 
+        pinochle 40
+
+
+        Do you want to end the game? (yes or no): 
+
+        The game started correctly.
+
+    10) HoldEm game, no players provided: ./lab2 HoldEm
         Wrong number of players, HoldEm requires from 2 to 9 players.
-        Usage: ./lab3 HoldEm <Player1> <Player2> [<Player3> ... <Player9>]
+        Usage: ./lab2 HoldEm <Player1> <Player2> [<Player3> ... <Player9>]
         (Exit code 9)
 
         The message is correct and the exit code is different from when Pinochle game didn't have the right amount of players. 
         This is a correct behavior because HoldEm is a separate game which has different exectuion rules, so it should have a unique command line error code.
 
-    10) HoldEm game, not enought players provided: ./lab3 HoldEm Bob
+    11) HoldEm game, not enought players provided: ./lab2 HoldEm Bob
         Wrong number of players, HoldEm requires from 2 to 9 players.
-        Usage: ./lab3 HoldEm <Player1> <Player2> [<Player3> ... <Player9>]
+        Usage: ./lab2 HoldEm <Player1> <Player2> [<Player3> ... <Player9>]
         (Exit code 9)
 
         We got the same error which is correct.
 
-    11) HoldEm game, too many players provided: ./lab3 HoldEm Bob1 Bob2 Bob3 Bob4 Bob5 Bob6 Bob7 Bob8 Bob9 Alex
+    12) HoldEm game, too many players provided: ./lab2 HoldEm Bob1 Bob2 Bob3 Bob4 Bob5 Bob6 Bob7 Bob8 Bob9 Alex
         Wrong number of players, HoldEm requires from 2 to 9 players.
-        Usage: ./lab3 HoldEm <Player1> <Player2> [<Player3> ... <Player9>]
+        Usage: ./lab2 HoldEm <Player1> <Player2> [<Player3> ... <Player9>]
         (Exit code 9)
 
         Again that's a correct behavior since we provided a wrong number of players.
 
-    12) HoldEm game, nine players provided, which is correct: ./lab3 HoldEm Bob1 Bob2 Bob3 Bob4 Bob5 Bob6 Bob7 Bob8 Bob9
+    13) HoldEm game, nine players provided, which is correct: ./lab2 HoldEm Bob1 Bob2 Bob3 Bob4 Bob5 Bob6 Bob7 Bob8 Bob9
         Bob1's hand:
-        3H 4H 
+        QS 5H 
         Bob2's hand:
-        AD 2D 
+        AS 8C 
         Bob3's hand:
-        AS 10S 
+        4H 9H 
         Bob4's hand:
-        8C 10D 
+        6S KH 
         Bob5's hand:
-        4D KC 
+        2C 10S 
         Bob6's hand:
-        JS 5C 
+        10C AC 
         Bob7's hand:
-        2C 9H 
+        JH 5C 
         Bob8's hand:
-        KS QC 
+        AH 6C 
         Bob9's hand:
-        JH 6H 
+        KD 8D 
         BOARD (flop): 
-        JC 5S 2H 
-        Bob6 JS 5C 2H 5S JC 
-         twopair
-        Bob9 JH 6H 2H 5S JC 
-         pair
-        Bob2 AD 2D 2H 5S JC 
-         pair
-        Bob7 2C 9H 2H 5S JC 
-         pair
-        Bob3 AS 10S 2H 5S JC 
-         xhigh
-        Bob8 KS QC 2H 5S JC 
-         xhigh
-        Bob5 4D KC 2H 5S JC 
-         xhigh
-        Bob4 8C 10D 2H 5S JC 
-         xhigh
-        Bob1 3H 4H 2H 5S JC 
-         xhigh
+        10D 2H JC 
+        Bob5 2C 10S JC 2H 10D 
+        twopair
+        Bob7 JH 5C JC 2H 10D 
+        pair
+        Bob6 10C AC JC 2H 10D 
+        pair
+        Bob2 AS 8C JC 2H 10D 
+        xhigh
+        Bob8 AH 6C JC 2H 10D 
+        xhigh
+        Bob9 KD 8D JC 2H 10D 
+        xhigh
+        Bob4 6S KH JC 2H 10D 
+        xhigh
+        Bob1 QS 5H JC 2H 10D 
+        xhigh
+        Bob3 4H 9H JC 2H 10D 
+        xhigh
         BOARD (turn): 
-        JC 5S 2H 4C 
+        10D 2H JC 7H 
         BOARD (river): 
-        JC 5S 2H 4C 3C 
+        10D 2H JC 7H 3S 
 
         Do you want to end the game? (yes or no):
 
+        The game started successfully which is totally right! This passes cases 2 and 3 in step 19 of the lab. the correct combination of cards is produced for each player with everyone having
+        the three cards from the common board in addition to their own two unique card and the list of ranked hands being displayed correctly. They are printed from highest ranked to lowest with
+        two pair winning, the pairs beneath, and then the high cards listed below those. Even thi high cards are listed in correct order!
 
-        Again we get proper behavior as in the previous lab.
-
-    13) HoldEm game, only two players provided, which is also correct: ./lab3 HoldEm Bob1 Bob2
+    14) HoldEm game, only two players provided, which is also correct: ./lab2 HoldEm Bob1 Bob2
         Bob1's hand:
-        7D JS 
+        JC 9S 
         Bob2's hand:
-        9C 8H 
+        2H QD 
         BOARD (flop): 
-        8C 9S 2S 
-        Bob2 9C 8H 2S 9S 8C 
-         twopair
-        Bob1 7D JS 2S 9S 8C 
-         xhigh
+        5D AC 8H 
+        Bob2 2H QD 8H AC 5D 
+        xhigh
+        Bob1 JC 9S 8H AC 5D 
+        xhigh
         BOARD (turn): 
-        8C 9S 2S 2D 
+        5D AC 8H QS 
         BOARD (river): 
-        8C 9S 2S 2D AD 
+        5D AC 8H QS JH 
 
         Do you want to end the game? (yes or no): 
 
         Again the game started successfully, which is right.
 
-    14) HoldEm game, a correct number of players is provided but they two of them are have the same name: ./lab3 HoldEm Bob 1 2 Bob
+    15) HoldEm game, a correct number of players is provided but they two of them are have the same name: ./lab2 HoldEm Bob 1 2 Bob
         In HoldEm, players can't have the same names.
         All player names should be unique.
 
         (Exit code 13)
 
         The error is treated correctly.
-
-    15) 

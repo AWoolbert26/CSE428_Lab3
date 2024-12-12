@@ -164,9 +164,6 @@ UnoRank& operator++(UnoRank& rank) {
         case UnoRank::wild:
             rank = UnoRank::blank;
             break;
-        case UnoRank::blank:
-            rank = UnoRank::zero;  // Cycles back to the beginning
-            break;
         default:
             rank = UnoRank::undefined;
     }
