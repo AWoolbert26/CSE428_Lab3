@@ -405,3 +405,5 @@ Testing:
           Books: QH QS QD QD
 
         The book was recognized correctly and game continues to work properly on all test cases.
+
+    19) The game ended correctly and output a correct message.
