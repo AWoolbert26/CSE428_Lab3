@@ -13,7 +13,6 @@
 constexpr int SUCCESS = 0;
 constexpr int WRONG_NUM_OF_ARGUMENTS = 1;
 constexpr int WRONG_NUM_OF_CARDS_PER_RANK = 2;
-constexpr int INVALID_DECK_TYPE = 3;
 constexpr int SUCCESS_END_OF_GAME = 6;
 constexpr int USAGE_WRONG_NUM_ARGS_ERROR = 7;
 constexpr int USAGE_PINOCHLE_ERROR = 8;

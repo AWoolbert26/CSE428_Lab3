@@ -19,28 +19,7 @@ Problems:
 
      - Game Termination Logic: Failing to handle all conditions for ending the game, such as when only one player remains or all books are collected.
 
-    Step 18: Added the collect books method to the GoFishGame class template. Simply used a count if to check if there are 4 cards of a certain rank and then collect_if to transfer it to 
-             the players books set. No errors or Issues.
-
-    Step 19: Building out the turn method for the GoFishGame class template took, by far, the most time. I made sure that the hand output is nicely compacted so that the user can see  
-             all players hands at the same time. The prompting of the user for a valid card rank and player number was a little complicated. I solved this by adding a from_string method
-             to all of the Deck classes. This method takes in a string and, if it is valid, returns a corresponding rank. This allowed me to check if the string that the player submits
-             is actually equal to the rank of one of the cards in his hand. I decided to just transfer one card over instead of many cards. I also implemented the gofish method if the 
-             request is unsuccessful. If the players hand is empty They automatically GoFish.
-
-    Step 20: Implemented the deal method. No errors or issues. 
-
-    Step 21: Implemented the play method. No errors or issues. 
-
-    Step 22: Changed the create method to check if the game is GoFish and create a GoFishGame specialized for different deck types. Also changed Game so that if the game is GoFish it creates
-             the player_names vector starting one later. No errors or issues.
-
-    Step 23: Modified the programs main function to accept GoFish and uses the create function accordingly. No errors or issues.
-
-    Step 24: When I made the entire thing there were numerous errors and issues throughout the codebase the compiler wasn't able to detect them until I actually instantiated a GoFishGame instance.
-             these took a very long time to sort out ...
-
-    Step 25: Ran numerous tests as described below.
+     - Command-Line Argument Parsing: Overlooking edge cases for invalid or improperly formatted arguments, leading to unhelpful error messages.
 
 
 Testing:

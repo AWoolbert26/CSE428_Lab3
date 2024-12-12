@@ -62,12 +62,12 @@ PinochleRank& operator++(PinochleRank& rank) {
 }
 
 PinochleRank PinochleDeck::fromString(const std::string& str) {
-    if (str == "nine") return PinochleRank::nine;
-    if (str == "jack") return PinochleRank::jack;
-    if (str == "queen") return PinochleRank::queen;
-    if (str == "king") return PinochleRank::king;
-    if (str == "ten") return PinochleRank::ten;
-    if (str == "ace") return PinochleRank::ace;
+    if (str == "nine" || str == "9") return PinochleRank::nine;
+    if (str == "jack" || str == "J") return PinochleRank::jack;
+    if (str == "queen" || str == "Q") return PinochleRank::queen;
+    if (str == "king" || str == "K") return PinochleRank::king;
+    if (str == "ten" || str == "10") return PinochleRank::ten;
+    if (str == "ace" || str == "A") return PinochleRank::ace;
 
     // If the string doesn't match any valid rank, return undefined
     return PinochleRank::undefined;

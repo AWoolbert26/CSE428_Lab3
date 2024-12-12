@@ -171,16 +171,16 @@ UnoRank& operator++(UnoRank& rank) {
 }
 
 UnoRank UnoDeck::fromString(const std::string& str) {
-    if (str == "0") return UnoRank::zero;
-    if (str == "1") return UnoRank::one;
-    if (str == "2") return UnoRank::two;
-    if (str == "3") return UnoRank::three;
-    if (str == "4") return UnoRank::four;
-    if (str == "5") return UnoRank::five;
-    if (str == "6") return UnoRank::six;
-    if (str == "7") return UnoRank::seven;
-    if (str == "8") return UnoRank::eight;
-    if (str == "9") return UnoRank::nine;
+    if (str == "0" || str == "zero") return UnoRank::zero;
+    if (str == "1" || str == "one") return UnoRank::one;
+    if (str == "2" || str == "two") return UnoRank::two;
+    if (str == "3" || str == "three") return UnoRank::three;
+    if (str == "4" || str == "four") return UnoRank::four;
+    if (str == "5" || str == "five") return UnoRank::five;
+    if (str == "6" || str == "six") return UnoRank::six;
+    if (str == "7" || str == "seven") return UnoRank::seven;
+    if (str == "8" || str == "eight") return UnoRank::eight;
+    if (str == "9" || str == "nine") return UnoRank::nine;
     if (str == "skip") return UnoRank::skip;
     if (str == "reverse") return UnoRank::reverse;
     if (str == "drawtwo") return UnoRank::drawtwo;
